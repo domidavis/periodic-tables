@@ -104,8 +104,7 @@ Test are split up by user story. You can run the tests for a given user story by
 `npm run test:X` where `X` is the user story number.
 
 Have a look at the following examples:
-
-- `npm run test:1` runs all the tests for user story 1 (both frontend and backend).
+-`npm run test:1` runs all the tests for user story 1 (both frontend and backend).
 - `npm run test:3:backend` runs only the backend tests for user story 3.
 - `npm run test:3:frontend` runs only the frontend tests for user story 3.
 
