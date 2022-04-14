@@ -6,7 +6,7 @@ import formatReservationDate from "./format-reservation-date";
 import formatReservationTime from "./format-reservation-date";
 
 const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL || "https://domi-tables-backend.herokuapp.com";
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
 
 /**
  * Defines the default headers for these functions to work with `json-server`
@@ -51,15 +51,20 @@ async function fetchJson(url, options, onCancel) {
     return Promise.resolve(onCancel);
   }
 }
+export async function read(reservation_id) {
+  const url = `${API_BASE_URL}/reservations/${reservation_id}`;
+  return await fetchJson(url, {headers}, {});
+}
+
 export async function createReservation(reservation, signal) {
-  const url = `${API_BASE_URL}/new`;
+  const url = `${API_BASE_URL}/reservations`;
   const options = {
     method: "POST",
     headers,
     body: JSON.stringify({data: reservation}),
     signal,
   };
-  return await fetchJson(url, options);
+  return await fetchJson(url, options, reservation);
 }
 /**
  * Retrieves all existing reservation.
