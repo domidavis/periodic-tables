@@ -4,12 +4,24 @@ import { useHistory, Link } from "react-router-dom";
 
 export default function CreateReservation() {
     const history = useHistory();
-    const [ reservation, setReservation ] = useState({});
+    const [error, setError] = useState(null);
+    const [reservation, setReservation] = useState({
+        first_name: "",
+        last_name: "",
+        mobile_number: "",
+        reservation_date: "",
+        reservation_time: "",
+    });
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const newRes = await createReservation(reservation);
-        setReservation({});
+        try {
+            const newRes = await createReservation(reservation);
+            history.push(`/${newRes.reservation_date}`);
+        }
+        catch(error) {
+            setError();
+        }
     }
 
     return (

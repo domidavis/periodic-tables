@@ -51,18 +51,15 @@ async function fetchJson(url, options, onCancel) {
     return Promise.resolve(onCancel);
   }
 }
-export async function createReservation(reservationId, reservation, signal) {
-  // There is a bug in json-server, if you post to /decks/:deckId/cards the associated deckId is a string
-  // and the card is not related to the deck because the data types of the ID's are different.
+export async function createReservation(reservation, signal) {
   const url = `${API_BASE_URL}/new`;
-  reservation.reservationId = Number(reservationId);
   const options = {
     method: "POST",
     headers,
-    body: JSON.stringify(reservation),
+    body: JSON.stringify({data: reservation}),
     signal,
   };
-  return await fetchJson(url, options, reservation);
+  return await fetchJson(url, options);
 }
 /**
  * Retrieves all existing reservation.
