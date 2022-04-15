@@ -9,6 +9,7 @@ export default function CreateReservation() {
         first_name: "",
         last_name: "",
         mobile_number: "",
+        people: "",
         reservation_date: "",
         reservation_time: "",
     });
@@ -17,7 +18,7 @@ export default function CreateReservation() {
         event.preventDefault();
         try {
             const newRes = await createReservation(reservation);
-            history.push(`/${newRes.reservation_date}`);
+            history.push(`/dashboard?date=${newRes.reservation_date}`);
         }
         catch(error) {
             setError();
@@ -60,6 +61,17 @@ export default function CreateReservation() {
                 name="mobile_number"
                 onChange={(e) => setReservation({...reservation, mobile_number: e.target.value})}
                 value={reservation.mobile_number}
+                required
+                />
+                <label htmlFor="people"
+                className="form-label">People:</label>
+                <input
+                id="people"
+                className="form-control"
+                type="number"
+                name="people"
+                onChange={(e) => setReservation({...reservation, people: e.target.value})}
+                value={reservation.people}
                 required
                 />
                 <label htmlFor="reservation_date"

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { listReservations } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
-import ListReservations from "../layout/ListReservations";
+import useQuery from "../utils/useQuery";
+import { next, previous, today } from "../utils/date-time";
+import { useHistory } from "react-router";
+import Reservation from "../layout/Reservation";
 
 /**
  * Defines the dashboard page.
@@ -10,6 +13,10 @@ import ListReservations from "../layout/ListReservations";
  * @returns {JSX.Element}
  */
 function Dashboard({ date }) {
+  const history = useHistory();
+  const query = useQuery();
+  const searchDate = query.get("date");
+  date = searchDate ? searchDate : date;
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
 
@@ -24,14 +31,16 @@ function Dashboard({ date }) {
     return () => abortController.abort();
   }
 
+  const list = reservations.map((res) => <Reservation key={res.reservation_id} reservation={res}/>);
+
   return (
     <main>
       <h1>Dashboard</h1>
       <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for date</h4>
+        <ErrorAlert error={reservationsError} />
+        <h4 className="mb-0">Reservations</h4>
       </div>
-      <ErrorAlert error={reservationsError} />
-      <ListReservations reservations={reservations} />
+      <div>{list}</div>
     </main>
   );
 }

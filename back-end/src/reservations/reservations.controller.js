@@ -1,98 +1,88 @@
 const service = require("./reservations.service");
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
-const hasProperties = require("../utils/hasProperties");
-
-const VALID_PROPERTIES = [
-  "first_name",
-  "last_name",
-  "mobile_number",
-  "reservation_date",
-  "reservation_time",
-  "people",
-  "reservation_id",
-];
-
-const REQUIRED_PROPERTIES = [
-  "first_name",
-  "last_name",
-  "mobile_number",
-  "reservation_date",
-  "reservation_time",
-  "people",
-];
-
-//const VALID_STATUS = ["booked", "seated", "finished", "cancelled"];
-
-const hasRequiredProperties = hasProperties(REQUIRED_PROPERTIES);
-
-function hasValidProperties(req, res, next) {
-  const { data } = req.body;
-
-  const invalidFields = Object.keys(data).filter((field) => !VALID_PROPERTIES.includes(field));
-
-  if (invalidFields.length) {
-    return next({
-      status: 400,
-      message: `Invalid Field(s): ${invalidFields.join(", ")}`,
-    });
-  next();
-  }
-}
-
-async function resExists(req, res, next) {
-  const { reservation_id } = req.params;
-  const foundRes = await service.read(reservation_id);
-
-  if(!foundRes) {
-    return next({
-      status: 404,
-      message: `Reservation ${reservation_id} not found`,
-    });
-  }
-}
-
-function validateTime(req, res, next) {
-  const { reservation_time } = req.body.data;
-  const valid = /\d\d:\d\d/;
-
-  if(!reservation_time) {
-    return next({
-      status: 400,
-      message: "Reservation time required",
-    });
-  }
-
-  if(!reservation_time.match(valid)) {
-    return next({
-      status: 400,
-      message: "Please provide time in valid format",
-    });
-  }
-}
 
 async function list(req, res) {
-  const { date, mobile_number } = req.query;
-  if(date) {
-    res.json({ data: await service.listByDate(date) });
+  const { date } = req.query;
+  console.log(date);
+  if (date) {
+    const list = await service.list(date);
+    res.status(200).json({ data: list });
+    console.log(list);
   } else {
-    res.json({ data: await service.list() });
+    const list = await service.list();
+    res.status(200).json({ data: list })
   }
 }
 
-async function create(req, res) {
-  res.status(201).json({ data: await service.create(req.body.data) });
+function bodyDataHas(propName) {
+  return function (req, res, next) {
+    const { data = {} } = req.body;
+    if(data[propName]) {
+      return next();
+    }
+    next({
+      status: 400,
+      message: `Reservation must include a ${propName}.`,
+    });
+  };
 }
 
-function read(req, res) {
-  res.json({ data: res.locals.reservation });
+function dateTimeIsValid(req, res, next) {
+  const { data: { reservation_date, reservation_time } = {} } = req.body;
+  const dateFormat = /^\d{4}-\d{1,2}-\d{1,2}$/;
+  const timeFormat = /^([0-2]?[0-9]|1[0-3]):[0-5][0-9]$/;
+
+  if (dateFormat.test(reservation_date) && timeFormat.test(reservation_time)) {
+    return next();
+  }
+  return next({
+    status: 400,
+    message: `reservation_date / reservation_time must be in valid format.`
+  })
 }
+
+function validatePeople(req, res, next) {
+  const { data: { people } = {} } = req.body;
+  if (typeof people === "number") {
+    return next();
+  }
+  return next({ status: 400, message: `people must be a number` });
+}
+
+async function create(req, res, next) {
+  const {
+    data: {
+      first_name,
+      last_name,
+      mobile_number,
+      people,
+      reservation_date,
+      reservation_time,
+    } = {},
+  } = req.body;
+  const newRes = {
+    first_name,
+    last_name,
+    mobile_number,
+    people,
+    reservation_date,
+    reservation_time,
+  };
+  await service.create(newRes);
+  res.status(201).json({ data: newRes });
+}
+
 module.exports = {
-  create:[
-    hasRequiredProperties,
-    hasValidProperties,
-    validateTime,
-    asyncErrorBoundary(create)
-  ],
   list: asyncErrorBoundary(list),
-  read: [asyncErrorBoundary(resExists), read]
-};
+  create: [
+    bodyDataHas("first_name"),
+    bodyDataHas("last_name"),
+    bodyDataHas("mobile_number"),
+    bodyDataHas("people"),
+    bodyDataHas("reservation_date"),
+    bodyDataHas("reservation_time"),
+    asyncErrorBoundary(dateTimeIsValid),
+    asyncErrorBoundary(validatePeople),
+    asyncErrorBoundary(create)
+  ]
+}
