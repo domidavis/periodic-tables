@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { createReservation } from "../utils/api";
 import { useHistory, Link } from "react-router-dom";
+import { formatAsDate, createReservation } from "../utils/api";
 
 export default function CreateReservation() {
+
     const history = useHistory();
-    const [error, setError] = useState(null);
+    const [errors, setErrors] = useState(null);
     const [reservation, setReservation] = useState({
         first_name: "",
         last_name: "",
@@ -17,16 +18,18 @@ export default function CreateReservation() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const newRes = await createReservation(reservation);
-            history.push(`/dashboard?date=${newRes.reservation_date}`);
+            setErrors(null);
+            await createReservation(reservation);
+            console.log(reservation.reservation_date);
+            history.push(`/dashboard?date=${reservation.reservation_date}`);
+        } catch(e) {
+            setErrors(e.response.data.error)
         }
-        catch(error) {
-            setError();
-        }
-    }
+    };
 
     return (
         <div>
+            <h1>Create Reservation</h1>
             <form onSubmit={handleSubmit}>
                 <div>
                 <label htmlFor="first_name"
@@ -50,7 +53,6 @@ export default function CreateReservation() {
                 placeholder="Enter your last name"
                 onChange={(e) => setReservation({...reservation, last_name: e.target.value})}
                 value={reservation.last_name}
-                required
                 />
                 <label htmlFor="mobile_number"
                 className="form-label">Mobile number:</label>
@@ -61,7 +63,6 @@ export default function CreateReservation() {
                 name="mobile_number"
                 onChange={(e) => setReservation({...reservation, mobile_number: e.target.value})}
                 value={reservation.mobile_number}
-                required
                 />
                 <label htmlFor="people"
                 className="form-label">People:</label>
@@ -72,7 +73,6 @@ export default function CreateReservation() {
                 name="people"
                 onChange={(e) => setReservation({...reservation, people: e.target.value})}
                 value={reservation.people}
-                required
                 />
                 <label htmlFor="reservation_date"
                 className="form-label">Reservation date:</label>
@@ -83,7 +83,6 @@ export default function CreateReservation() {
                 name="reservation_date"
                 onChange={(e) => setReservation({...reservation, reservation_date: e.target.value})}
                 value={reservation.reservation_date}
-                required
                 />
                 <label htmlFor="reservation_time"
                 className="form-label">Reservation time:</label>
