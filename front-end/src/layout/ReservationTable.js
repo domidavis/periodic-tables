@@ -3,7 +3,6 @@ import SingleReservation from "./SingleReservation";
 
 export default function ReservationTable({ reservations }) {
     const list = reservations.map((res) => <SingleReservation reservation={res}/>);
-
     return (
     <div>
         <table className="table">

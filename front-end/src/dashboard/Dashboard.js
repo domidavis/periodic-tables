@@ -27,7 +27,7 @@ function Dashboard({ date }) {
     setReservationsError(null);
     listReservations({ date }, abortController.signal)
       .then(setReservations)
-      .catch(setReservationsError);
+      .catch(error => setReservationsError(error.response.data.error));
     return () => abortController.abort();
   }
   const handlePrevious = (event) => {
@@ -39,13 +39,13 @@ function Dashboard({ date }) {
   const handleNext = (event) => {
     history.push(`dashboard?date=${next(date)}`);
   }
-
+  console.log(reservations);
   return (
     <main>
       <h1>Dashboard</h1>
       <div>
         <ErrorAlert error={reservationsError} />
-        <div className="container">
+        <div>
           <h3 className="mb-0">Reservations</h3>
           <button className="btn btn-secondary m-2" onClick={handlePrevious}>Previous</button>
           <button className="btn btn-secondary m-2" onClick={handleToday}>Today</button>
