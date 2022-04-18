@@ -48,7 +48,7 @@ function dateIsFuture(req, res, next) {
   if (reservationDate < today) {
     return next({
       status: 400,
-      message: `reservation must be for a future date and time`
+      message: `Reservation must be for a future date and time.`
     });
   } else {
     return next();
@@ -66,6 +66,16 @@ function dateIsWorkingDay(req, res, next) {
     } else {
       return next();
     }
+}
+
+function timeIsWorkingHours(req, res, next) {
+  const { data: { reservation_time } = {} } = req.body;
+  if (reservation_time < "10:30" || reservation_time > "21:30") {
+    return next({
+      status: 400,
+      message: `Reservation must be between 10:30AM and 9:30PM.`
+    })
+  }
 }
 
 function validatePeople(req, res, next) {
@@ -111,6 +121,7 @@ module.exports = {
     asyncErrorBoundary(dateTimeIsValid),
     asyncErrorBoundary(dateIsFuture),
     asyncErrorBoundary(dateIsWorkingDay),
+    asyncErrorBoundary(timeIsWorkingHours),
     asyncErrorBoundary(validatePeople),
     asyncErrorBoundary(create)
   ]
