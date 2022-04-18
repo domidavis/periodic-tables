@@ -41,6 +41,33 @@ function dateTimeIsValid(req, res, next) {
   })
 }
 
+function dateIsFuture(req, res, next) {
+  const { data: { reservation_date, reservation_time } = {} } = req.body;
+  const today = new Date();
+  const reservationDate = new Date(`${reservation_date} ${reservation_time}`);
+  if (reservationDate < today) {
+    return next({
+      status: 400,
+      message: `reservation must be for a future date and time`
+    });
+  } else {
+    return next();
+  }
+}
+
+function dateIsWorkingDay(req, res, next) {
+  const { data: { reservation_date } = {} } = req.body;
+  const date = new Date(reservation_date);
+    if (date.getDay() === 1) {
+      return next({
+        status: 400,
+        message: `Restaurant is closed on Tuesdays.`
+      });
+    } else {
+      return next();
+    }
+}
+
 function validatePeople(req, res, next) {
   const { data: { people } = {} } = req.body;
   if (typeof people === "number") {
@@ -82,6 +109,8 @@ module.exports = {
     bodyDataHas("reservation_date"),
     bodyDataHas("reservation_time"),
     asyncErrorBoundary(dateTimeIsValid),
+    asyncErrorBoundary(dateIsFuture),
+    asyncErrorBoundary(dateIsWorkingDay),
     asyncErrorBoundary(validatePeople),
     asyncErrorBoundary(create)
   ]

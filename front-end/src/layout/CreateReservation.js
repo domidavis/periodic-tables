@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { createReservation } from "../utils/api";
+import ErrorAlert from "./ErrorAlert";
 
 export default function CreateReservation() {
-
     const history = useHistory();
+    const [errors, setErrors] = useState(null);
     const [reservation, setReservation] = useState({
         first_name: "",
         last_name: "",
@@ -28,13 +29,20 @@ export default function CreateReservation() {
     }
     const handleSubmit = async (event) => {
         event.preventDefault();
-        await createReservation(reservation);
-        console.log(reservation.reservation_date);
-        history.push(`/dashboard?date=${reservation.reservation_date}`);
+        try {
+            setErrors(null);
+            await createReservation(reservation);
+            history.push(`/dashboard?date=${reservation.reservation_date}`);
+        }
+        catch(e) {
+            setErrors(e);
+        }
+
     };
 
     return (
         <div>
+            <ErrorAlert error={errors} />
             <h1>Create Reservation</h1>
             <form onSubmit={handleSubmit}>
                 <div>
