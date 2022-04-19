@@ -27,7 +27,7 @@ function Dashboard({ date }) {
     setReservationsError(null);
     listReservations({ date }, abortController.signal)
       .then(setReservations)
-      .catch(error => setReservationsError(error.response.data.error));
+      .catch(error => setReservationsError(error));
     return () => abortController.abort();
   }
   const handlePrevious = (event) => {

@@ -3,12 +3,14 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 
 async function list(req, res) {
   const { date } = req.query;
+  console.log(date);
   if (date) {
-    const resList = await service.list(date);
-    res.status(200).json({ data: resList });
+    const list = await service.list(date);
+    res.status(200).json({ data: list });
+    console.log(list);
   } else {
-    const resList = await service.list();
-    res.status(200).json({ data: resList })
+    const list = await service.list();
+    res.status(200).json({ data: list })
   }
 }
 
@@ -36,7 +38,7 @@ function dateTimeIsValid(req, res, next) {
   return next({
     status: 400,
     message: `reservation_date / reservation_time must be in valid format.`
-  });
+  })
 }
 
 function dateIsFuture(req, res, next) {
@@ -81,10 +83,7 @@ function validatePeople(req, res, next) {
   if (typeof people === "number") {
     return next();
   }
-  return next({
-    status: 400,
-    message: `people must be a number`
-  });
+  return next({ status: 400, message: `people must be a number` });
 }
 
 async function create(req, res, next) {

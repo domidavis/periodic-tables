@@ -45,14 +45,17 @@ async function create(req, res, next) {
         data: {
             table_name,
             capacity,
+            reservation_id = null
         } = {},
     } = req.body;
     const newTable = {
         table_name,
         capacity,
+        reservation_id,
+        status: reservation_id ? "occupied" : "Free"
     };
-    await service.create(newTable);
-    res.status(201).json({ data: newTable })
+    const response = await service.create(newTable);
+    res.status(201).json({ data: response })
 }
 module.exports = {
     list: asyncErrorBoundary(list),
