@@ -4,7 +4,7 @@ import ErrorAlert from "../layout/ErrorAlert";
 import useQuery from "../utils/useQuery";
 import { previous, today, next } from "../utils/date-time";
 import { useHistory } from "react-router";
-import ReservationTable from "../layout/ReservationTable";
+import ReservationTable from "../layout/reservations/ReservationTable";
 
 /**
  * Defines the dashboard page.

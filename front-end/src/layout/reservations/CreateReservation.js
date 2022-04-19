@@ -47,7 +47,7 @@ export default function CreateReservation() {
             <form onSubmit={handleSubmit}>
                 <div>
                 <label htmlFor="first_name"
-                className="form-label">First name:</label>
+                className="form-label">First name</label>
                 <input
                 id="first_name"
                 className="form-control"
@@ -57,7 +57,7 @@ export default function CreateReservation() {
                 onChange={handleChange}
                 />
                 <label htmlFor="last_name"
-                className="form-label">Last name:</label>
+                className="form-label">Last name</label>
                 <input
                 id="last_name"
                 className="form-control"
@@ -65,47 +65,52 @@ export default function CreateReservation() {
                 name="last_name"
                 placeholder="Enter your last name"
                 onChange={handleChange}
+                required
                 />
                 <label htmlFor="mobile_number"
-                className="form-label">Mobile number:</label>
+                className="form-label">Mobile number</label>
                 <input
                 id="mobile_number"
                 className="form-control"
                 type="tel"
                 name="mobile_number"
                 onChange={handleChange}
+                required
                 />
                 <label htmlFor="people"
-                className="form-label">People:</label>
+                className="form-label">People</label>
                 <input
                 id="people"
                 className="form-control"
                 type="number"
                 name="people"
                 onChange={handleChange}
+                required
                 />
                 <label htmlFor="reservation_date"
-                className="form-label">Reservation date:</label>
+                className="form-label">Reservation date</label>
                 <input
                 id="reservation_date"
                 className="form-control"
                 type="date"
                 name="reservation_date"
                 onChange={handleChange}
+                required
                 />
                 <label htmlFor="reservation_time"
-                className="form-label">Reservation time:</label>
+                className="form-label">Reservation time</label>
                 <input
                 id="reservation_time"
                 className="form-control"
                 type="time"
                 name="reservation_time"
                 onChange={handleChange}
+                required
                 />
                 </div>
                 <Link to={"/"}><button className="btn btn-secondary m-1">Cancel</button></Link>
                 <button className="btn btn-primary m-1" type="submit">Submit</button>
             </form>
         </div>
-    )
+    );
 }
