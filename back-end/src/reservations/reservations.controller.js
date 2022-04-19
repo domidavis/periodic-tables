@@ -76,6 +76,7 @@ function timeIsWorkingHours(req, res, next) {
       message: `Reservation must be between 10:30AM and 9:30PM.`
     })
   }
+  return next();
 }
 
 function validatePeople(req, res, next) {
@@ -105,6 +106,7 @@ async function create(req, res, next) {
     reservation_date,
     reservation_time,
   };
+
   await service.create(newRes);
   res.status(201).json({ data: newRes });
 }
@@ -123,6 +125,6 @@ module.exports = {
     asyncErrorBoundary(dateIsWorkingDay),
     asyncErrorBoundary(timeIsWorkingHours),
     asyncErrorBoundary(validatePeople),
-    asyncErrorBoundary(create)
+    asyncErrorBoundary(create),
   ]
 }
