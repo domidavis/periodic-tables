@@ -5,6 +5,7 @@ async function list() {
     .select("*")
     .orderBy("table_name");
 }
+
 async function create(table) {
     return knex("tables")
     .insert(table)

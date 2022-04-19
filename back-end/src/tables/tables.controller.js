@@ -58,7 +58,7 @@ async function create(req, res, next) {
     res.status(201).json({ data: response })
 }
 module.exports = {
-    list: asyncErrorBoundary(list),
+    list,
     create: [
         bodyDataHas("table_name"),
         bodyDataHas("capacity"),
