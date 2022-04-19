@@ -48,7 +48,7 @@ function dateIsFuture(req, res, next) {
   if (reservationDate < today) {
     return next({
       status: 400,
-      message: `Reservation must be for a future date and time.`
+      message: `Reservation must be on a future date and time.`
     });
   } else {
     return next();

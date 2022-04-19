@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
-import { createReservation } from "../utils/api";
-import ErrorAlert from "./ErrorAlert";
+import { createReservation } from "../../utils/api";
+import ErrorAlert from "../ErrorAlert";
 
 export default function CreateReservation() {
     const history = useHistory();
