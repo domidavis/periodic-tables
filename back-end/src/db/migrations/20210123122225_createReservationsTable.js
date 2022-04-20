@@ -7,6 +7,7 @@ exports.up = function (knex) {
     table.string("people").notNullable();
     table.string("reservation_date").notNullable();
     table.string("reservation_time").notNullable();
+    table.string("status").defaultTo("booked").notNullable();
     table.timestamps(true, true);
   });
 };

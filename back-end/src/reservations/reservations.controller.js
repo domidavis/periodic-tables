@@ -3,7 +3,6 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 
 async function list(req, res) {
   const { date } = req.query;
-  console.log(date);
   if (date) {
     const list = await service.list(date);
     res.status(200).json({ data: list });
@@ -87,6 +86,20 @@ function validatePeople(req, res, next) {
   return next({ status: 400, message: `people must be a number` });
 }
 
+async function resExists(req, res, next) {
+  const resId = req.params.reservation_id;
+  const foundRes = await service.read(resId)
+  if(foundRes) {
+    res.locals.reservation = foundRes;
+    return next();
+  }
+  next({ status: 404, message: `reservation ${resId} not found` });
+}
+
+async function read(req, res, next) {
+  res.json({ data: res.locals.reservation })
+}
+
 async function create(req, res, next) {
   const {
     data: {
@@ -113,6 +126,10 @@ async function create(req, res, next) {
 
 module.exports = {
   list: asyncErrorBoundary(list),
+  read: [
+    asyncErrorBoundary(resExists),
+    asyncErrorBoundary(read)
+  ],
   create: [
     bodyDataHas("first_name"),
     bodyDataHas("last_name"),
