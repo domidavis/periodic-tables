@@ -19,7 +19,7 @@ describe("US-04 - Seat reservation - E2E", () => {
 
   beforeAll(async () => {
     await fsPromises.mkdir("./.screenshots", { recursive: true });
-    setDefaultOptions({ timeout: 1000 });
+    setDefaultOptions({ timeout: 10000 });
     browser = await puppeteer.launch();
   });
 
@@ -254,7 +254,7 @@ describe("US-04 - Seat reservation - E2E", () => {
         fullPage: true,
       });
 
-      const hrefSelector = `[href="/reservations/${reservation.reservation_id}/seat"]`;
+      const hrefSelector = `[to="/reservations/${reservation.reservation_id}/seat"]`;
 
       await page.waitForSelector(hrefSelector);
 

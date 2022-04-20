@@ -120,8 +120,7 @@ async function create(req, res, next) {
     reservation_time,
   };
 
-  await service.create(newRes);
-  res.status(201).json({ data: newRes });
+  res.status(201).json({ data: await service.create(req.body.data) });
 }
 
 module.exports = {

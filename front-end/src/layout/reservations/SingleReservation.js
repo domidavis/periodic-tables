@@ -11,7 +11,7 @@ export default function SingleReservation({ reservation }) {
             <td>{reservation.reservation_date}</td>
             <td>{reservation.reservation_time}</td>
             <td>{reservation.people}</td>
-            <td>booked</td>
+            <td>{reservation.status}</td>
             <Link to={seatLink}>
                 <button className="btn btn-secondary m-1">Seat</button>
             </Link>
