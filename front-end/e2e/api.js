@@ -59,6 +59,7 @@ async function createReservation(reservation, signal) {
     body: JSON.stringify({ data: reservation }),
     signal,
   };
+  console.log("test api createRes", await fetchJson(url, options, reservation))
   return await fetchJson(url, options, reservation);
 }
 

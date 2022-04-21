@@ -119,7 +119,7 @@ async function create(req, res, next) {
     reservation_date,
     reservation_time,
   };
-
+  console.log("reservations.controller create", await service.create(req.body.data))
   res.status(201).json({ data: await service.create(req.body.data) });
 }
 
