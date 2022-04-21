@@ -13,6 +13,7 @@ router.route("/:table_id")
     
 router.route("/:table_id/seat")
     .put(controller.seatTable)
+    .delete(controller.freeTable)
     .all(methodNotAllowed);
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const service = require("./tables.service");
 const resService = require("../reservations/reservations.service");
 const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
+const { identity } = require("lodash");
 
 async function list(req, res) {
     const tablesList = await service.list();
@@ -96,18 +97,32 @@ function checkCapacity(req, res, next) {
 }
 
 function checkAvailability(req, res, next) {
-    const table = res.locals.table;
-    if (table.status === "Free") {
+    const { reservation_id } = res.locals.table;
+    if (!reservation_id) {
         return next();
     }
     return next({ status: 400, message: `Table ${table} is occupied.`});
 }
-
+function isOccupied(req, res, next) {
+    const { reservation_id } = res.locals.table;
+    if (reservation_id) {
+        return next();
+    }
+    return next({
+        status: 400,
+        message: `Table is not occupied.`,
+    })
+}
 async function seatTable(req, res, next) {
     const table = res.locals.table;
     const reservation = res.locals.reservation;
     const seated = await service.seat(table.table_id, reservation.reservation_id);
     res.status(200).json({data:{seated}});
+}
+
+async function freeTable(req, res, next) {
+    const { table_id, reservation_id } = res.locals.table;
+    res.json({ data: await service.unseat(table_id, reservation_id) });
 }
 
 module.exports = {
@@ -130,5 +145,10 @@ module.exports = {
         checkCapacity,
         checkAvailability,
         asyncErrorBoundary(seatTable)
+    ],
+    freeTable: [
+        tableExists,
+        isOccupied,
+        asyncErrorBoundary(freeTable)
     ]
 }

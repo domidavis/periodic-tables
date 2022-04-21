@@ -20,7 +20,6 @@ async function create(table) {
 }
 
 async function seat(tableId, resId) {
-    console.log(resId);
     return knex("reservations")
     .where({"reservation_id": resId})
     .update({"status": "seated"})
@@ -31,9 +30,22 @@ async function seat(tableId, resId) {
     })
 }
 
+async function unseat(table_id, reservation_id) {
+    return knex("reservations")
+    .where({ reservation_id })
+    .update({ status: "finished" })
+    .returning("*")
+    .then(() => {
+        return knex("tables")
+            .where({ table_id })
+            .update({ reservation_id: null })
+            .returning("*");
+    });
+}
 module.exports = {
     list,
     read,
     create,
-    seat
+    seat,
+    unseat
 }
