@@ -99,7 +99,33 @@ async function resExists(req, res, next) {
 async function read(req, res, next) {
   res.json({ data: res.locals.reservation })
 }
+function validateStatus(req, res, next) {
+  const { data: { status } = {} } = req.body;
+  if(status) {
+    if(status !== "booked") {
+      return next({
+        status: 400,
+        message: `Status '${status}' invalid`
+      })
+    }
+  }
+  next();
+}
 
+function statusExists(req, res, next) {
+  const valid = ["finished", "booked", "seated"];
+  const { status } = req.body.data;
+  if (valid.includes(status)) return next();
+  next({ status: 400, message: `unknown status: ${status}`})
+}
+
+function statusIsFinished(req, res, next) {
+  const { status } = res.locals.reservation;
+  if (status === "finished") {
+    return next({status: 400, message: `can't update finished reservation`})
+  }
+  next();
+}
 async function create(req, res, next) {
   const {
     data: {
@@ -119,8 +145,14 @@ async function create(req, res, next) {
     reservation_date,
     reservation_time,
   };
-  console.log("reservations.controller create", await service.create(req.body.data))
-  res.status(201).json({ data: await service.create(req.body.data) });
+  res.status(201).json({ data: await service.create(newRes) });
+}
+
+async function setStatus(req, res, next) {
+  const { reservation_id } = res.locals.reservation;
+  const { status } = req.body.data;
+
+  res.json({ data: await service.setStatus(reservation_id, status)})
 }
 
 module.exports = {
@@ -141,6 +173,14 @@ module.exports = {
     asyncErrorBoundary(dateIsWorkingDay),
     asyncErrorBoundary(timeIsWorkingHours),
     asyncErrorBoundary(validatePeople),
+    validateStatus,
     asyncErrorBoundary(create),
+  ],
+  setStatus: [
+    bodyDataHas("status"),
+    asyncErrorBoundary(resExists),
+    statusExists,
+    statusIsFinished,
+    asyncErrorBoundary(setStatus)
   ]
 }

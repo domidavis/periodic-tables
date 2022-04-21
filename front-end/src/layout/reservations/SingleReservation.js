@@ -12,10 +12,14 @@ export default function SingleReservation({ reservation }) {
             <td>{reservation.reservation_date}</td>
             <td>{reservation.reservation_time}</td>
             <td>{reservation.people}</td>
-            <td>{reservation.status}</td>
-            <a href={seatLink}>
-                <button className="btn btn-secondary m-1">Seat</button>
-            </a>
+            <td data-reservation-id-status={reservation.reservation_id}>{reservation.status}</td>
+            {reservation.status === "booked" && (
+                <td>
+                    <a href={seatLink}>
+                        <button className="btn btn-secondary m-1">Seat</button>
+                    </a>
+                </td>
+            )}
         </tr>
     );
 }

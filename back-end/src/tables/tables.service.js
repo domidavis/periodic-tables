@@ -20,13 +20,15 @@ async function create(table) {
 }
 
 async function seat(tableId, resId) {
+    console.log(tableId, resId)
     return knex("reservations")
     .where({"reservation_id": resId})
     .update({"status": "seated"})
     .then(() => {
         return knex("tables")
         .where({"table_id": tableId})
-        .update({"status": "occupied", "reservation_id": resId});
+        .update({"status": "occupied", "reservation_id": resId})
+
     })
 }
 

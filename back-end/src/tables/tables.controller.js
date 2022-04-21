@@ -101,8 +101,9 @@ function checkAvailability(req, res, next) {
     if (!reservation_id) {
         return next();
     }
-    return next({ status: 400, message: `Table ${table} is occupied.`});
+    return next({ status: 400, message: `Table ${res.locals.table.table_name} is occupied.`});
 }
+
 function isOccupied(req, res, next) {
     const { reservation_id } = res.locals.table;
     if (reservation_id) {
@@ -113,11 +114,20 @@ function isOccupied(req, res, next) {
         message: `Table is not occupied.`,
     })
 }
+
+function reservationNotSeated(req, res, next) {
+    const { status } = res.locals.reservation;
+    if (status == "seated") {
+        return next({ status: 400, message: `Reservation is already seated.`});
+    }
+    next();
+}
 async function seatTable(req, res, next) {
     const table = res.locals.table;
     const reservation = res.locals.reservation;
     const seated = await service.seat(table.table_id, reservation.reservation_id);
-    res.status(200).json({data:{seated}});
+    console.log("tables.controller seatTable", seated)
+     res.status(200).json({data:{seated}});
 }
 
 async function freeTable(req, res, next) {
@@ -144,7 +154,8 @@ module.exports = {
         tableExists,
         checkCapacity,
         checkAvailability,
-        asyncErrorBoundary(seatTable)
+        reservationNotSeated,
+        seatTable
     ],
     freeTable: [
         tableExists,

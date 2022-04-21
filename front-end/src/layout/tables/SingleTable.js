@@ -1,9 +1,7 @@
 import React from "react"
 import { freeTable } from "../../utils/api";
-import { useHistory } from "react-router";
 
 export default function SingleTable({ table, setError }) {
-    const history = useHistory();
 
     const handleClick = async (event) => {
         event.preventDefault();
@@ -26,7 +24,7 @@ export default function SingleTable({ table, setError }) {
             <td>{table.table_name}</td>
             <td>{table.capacity}</td>
             <td data-table-id-status={table.table_id}>{table.status}</td>
-            {table.status == "occupied" && (
+            {table.status === "occupied" && (
                 <td><button type="submit"
                 data-table-id-finish={table.table_id}
                 className="btn btn-primary"
