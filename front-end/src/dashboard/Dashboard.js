@@ -75,7 +75,7 @@ function Dashboard({ date }) {
             <ReservationTable reservations={reservations} />
             <h2>Tables</h2>
             <ErrorAlert error={tablesError} />
-            <DisplayTables tables={tables} />
+            <DisplayTables tables={tables} setError={setTablesError}/>
           </div>
         </div>
     </main>

@@ -32,14 +32,14 @@ async function seat(tableId, resId) {
 
 async function unseat(table_id, reservation_id) {
     return knex("reservations")
-    .where({ reservation_id })
-    .update({ status: "finished" })
+    .where({ "reservation_id": reservation_id })
+    .update({ "status": "finished" })
     .returning("*")
     .then(() => {
         return knex("tables")
-            .where({ table_id })
-            .update({ reservation_id: null })
-            .returning("*");
+            .select("*")
+            .where({ "table_id": table_id })
+            .update({ "status": "free", "reservation_id": knex.raw("DEFAULT") })
     });
 }
 module.exports = {
