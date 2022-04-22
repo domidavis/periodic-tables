@@ -2,7 +2,7 @@ import React from "react";
 import SingleTable from "./SingleTable";
 
 export default function DisplayTables({ tables, setError }) {
-    const list = tables.map((table) => <SingleTable table={table} setError={setError}/>);
+    const list = tables.map((table) => <SingleTable key={table.table_id} table={table} setError={setError}/>);
     return (
         <div>
             <table className="table">

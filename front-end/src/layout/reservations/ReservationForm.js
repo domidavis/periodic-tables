@@ -21,13 +21,14 @@ export default function ReservationForm() {
         async function loadReservation() {
             try {
                 const loadedRes = await read(reservation_id, ac.signal);
-                setReservation(loadedRes);
+                setReservation({ ...loadedRes, "people": parseInt(loadedRes.people) });
+                console.log("LOADED RESERVATION", loadedRes);
             } catch(e) {
                 setErrors(e);
             }
         }
         if (reservation_id) loadReservation();
-        return ac.abort;
+        return () => ac.abort;
     }, [reservation_id]);
 
 
@@ -44,9 +45,11 @@ export default function ReservationForm() {
             });
         }
     }
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
+            console.log("trying handle submit")
             if (reservation_id) {
                 await updateReservation(reservation);
             } else {
@@ -56,6 +59,7 @@ export default function ReservationForm() {
             history.push(`/dashboard?date=${reservation.reservation_date}`);
         }
         catch(e) {
+            console.log("catching handle submit")
             setErrors(e);
         }
 
@@ -75,6 +79,7 @@ export default function ReservationForm() {
                 name="first_name"
                 placeholder="Enter your first name"
                 onChange={handleChange}
+                value={reservation.first_name}
                 />
                 <label htmlFor="last_name"
                 className="form-label">Last name</label>
@@ -85,6 +90,7 @@ export default function ReservationForm() {
                 name="last_name"
                 placeholder="Enter your last name"
                 onChange={handleChange}
+                value={reservation.last_name}
                 required
                 />
                 <label htmlFor="mobile_number"
@@ -95,6 +101,7 @@ export default function ReservationForm() {
                 type="tel"
                 name="mobile_number"
                 onChange={handleChange}
+                value={reservation.mobile_number}
                 required
                 />
                 <label htmlFor="people"
@@ -105,6 +112,7 @@ export default function ReservationForm() {
                 type="number"
                 name="people"
                 onChange={handleChange}
+                value={reservation.people}
                 required
                 />
                 <label htmlFor="reservation_date"
@@ -115,6 +123,7 @@ export default function ReservationForm() {
                 type="date"
                 name="reservation_date"
                 onChange={handleChange}
+                value={reservation.reservation_date}
                 required
                 />
                 <label htmlFor="reservation_time"
@@ -125,10 +134,11 @@ export default function ReservationForm() {
                 type="time"
                 name="reservation_time"
                 onChange={handleChange}
+                value={reservation.reservation_time}
                 required
                 />
                 </div>
-                <Link to={"/"}><button className="btn btn-secondary m-1">Cancel</button></Link>
+                <Link to={"/"}><button type="button" className="btn btn-secondary m-1">Cancel</button></Link>
                 <button className="btn btn-primary m-1" type="submit">Submit</button>
             </form>
         </div>

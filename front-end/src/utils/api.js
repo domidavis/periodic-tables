@@ -2,7 +2,7 @@
  * Defines the base URL for the API.
  * The default values is overridden by the `API_BASE_URL` environment variable.
  */
- import { zip } from "lodash";
+// import { zip } from "lodash";
 import formatReservationDate from "./format-reservation-date";
  import formatReservationTime from "./format-reservation-date";
  
@@ -33,9 +33,9 @@ import formatReservationDate from "./format-reservation-date";
      return Promise.resolve(onCancel);
    }
  }
- export async function read(reservation_id) {
+ export async function read(reservation_id, signal) {
    const url = `${API_BASE_URL}/reservations/${reservation_id}`;
-   return await fetchJson(url, {headers}, {});
+   return await fetchJson(url, { signal }, {});
  }
 
  export async function createTable(table, signal) {
