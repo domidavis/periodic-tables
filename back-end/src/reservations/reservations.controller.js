@@ -150,6 +150,15 @@ async function create(req, res, next) {
   };
   res.status(201).json({ data: await service.create(newRes) });
 }
+async function update(req, res, next) {
+  const { reservation_id } = res.locals.reservation;
+
+  const updatedRes = {
+    ...req.body.data,
+    reservation_id,
+  }
+  res.json({ data: await service.update(updatedRes) });
+}
 
 async function setStatus(req, res, next) {
   const { reservation_id } = res.locals.reservation;
@@ -178,6 +187,22 @@ module.exports = {
     asyncErrorBoundary(validatePeople),
     validateStatus,
     asyncErrorBoundary(create),
+  ],
+  update: [
+    asyncErrorBoundary(resExists),
+    bodyDataHas("first_name"),
+    bodyDataHas("last_name"),
+    bodyDataHas("mobile_number"),
+    bodyDataHas("people"),
+    bodyDataHas("reservation_date"),
+    bodyDataHas("reservation_time"),
+    asyncErrorBoundary(dateTimeIsValid),
+    asyncErrorBoundary(dateIsFuture),
+    asyncErrorBoundary(dateIsWorkingDay),
+    asyncErrorBoundary(timeIsWorkingHours),
+    asyncErrorBoundary(validatePeople),
+    validateStatus,
+    asyncErrorBoundary(update),
   ],
   setStatus: [
     bodyDataHas("status"),
