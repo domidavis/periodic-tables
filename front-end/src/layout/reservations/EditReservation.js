@@ -1,10 +1,10 @@
 
 import ReservationForm from "./ReservationForm";
 
-export default function CreateReservation() {
+export default function EditReservation() {
     return (
         <div>
-            <h1>Create Reservation</h1>
+            <h1>Edit Reservation</h1>
             <ReservationForm />
         </div>
     );

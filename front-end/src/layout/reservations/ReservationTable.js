@@ -1,8 +1,8 @@
 import React from "react";
 import SingleReservation from "./SingleReservation";
 
-export default function ReservationTable({ reservations }) {
-    const list = reservations.map((res) => <SingleReservation reservation={res}/>);
+export default function ReservationTable({ reservations, setError }) {
+    const list = reservations.map((res) => <SingleReservation reservation={res} setError={setError}/>);
     return (
     <div>
         <table className="table">

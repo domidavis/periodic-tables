@@ -116,7 +116,7 @@ function validateStatus(req, res, next) {
 }
 
 function statusExists(req, res, next) {
-  const valid = ["finished", "booked", "seated"];
+  const valid = ["finished", "booked", "seated", "cancelled"];
   const { status } = req.body.data;
   if (valid.includes(status)) return next();
   next({ status: 400, message: `unknown status: ${status}`})

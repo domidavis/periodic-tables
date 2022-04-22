@@ -72,7 +72,7 @@ function Dashboard({ date }) {
           <button className="btn btn-secondary m-2" onClick={handlePrevious}>Previous</button>
           <button className="btn btn-secondary m-2" onClick={handleToday}>Today</button>
           <button className="btn btn-secondary m-2" onClick={handleNext}>Next</button>
-            <ReservationTable reservations={reservations} />
+            <ReservationTable reservations={reservations} setError={setReservationsError}/>
             <h2>Tables</h2>
             <ErrorAlert error={tablesError} />
             <DisplayTables tables={tables} setError={setTablesError}/>

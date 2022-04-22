@@ -2,7 +2,8 @@
  * Defines the base URL for the API.
  * The default values is overridden by the `API_BASE_URL` environment variable.
  */
- import formatReservationDate from "./format-reservation-date";
+ import { zip } from "lodash";
+import formatReservationDate from "./format-reservation-date";
  import formatReservationTime from "./format-reservation-date";
  
  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
@@ -59,6 +60,17 @@
    return await fetchJson(url, options, reservation);
  }
 
+ export async function updateReservation(reservation, signal) {
+  const url = `${API_BASE_URL}/reservations/${reservation.reservation_id}`;
+  const options = {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({ data: reservation }),
+    signal,
+  };
+  return await fetchJson(url, options, reservation);
+ }
+
  export async function seatTable(reservation_id, table_id, signal) {
    const url = `${API_BASE_URL}/tables/${table_id}/seat`;
    const options = {
@@ -88,8 +100,18 @@ export async function freeTable(table_id, signal) {
     return await fetchJson(url, { headers, signal }, [])
   }
   
+  export async function cancelReservation(resId, signal) {
+    const url = new URL(`${API_BASE_URL}/reservations/${resId}/status`);
+    const options = {
+      method: "PUT",
+      headers,
+      body: JSON.stringify({ data: { status: "cancelled" } }),
+      signal,
+    };
+    return await fetchJson(url, options);
+  }
+
   export async function listReservations(params, signal) {
-    console.log("API FUNCTION", params)
     const url = new URL(`${API_BASE_URL}/reservations`);
     if (params) {
       Object.entries(params).forEach(([key, value]) =>
