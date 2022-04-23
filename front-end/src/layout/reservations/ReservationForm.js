@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory, useParams, Link } from "react-router-dom";
 import { createReservation, read, updateReservation } from "../../utils/api";
 import ErrorAlert from "../ErrorAlert";
+import { formatAsDate } from "../../utils/date-time";
 
 export default function ReservationForm() {
     const { reservation_id } = useParams();
@@ -21,8 +22,11 @@ export default function ReservationForm() {
         async function loadReservation() {
             try {
                 const loadedRes = await read(reservation_id, ac.signal);
-                setReservation({ ...loadedRes, "people": parseInt(loadedRes.people) });
-                console.log("LOADED RESERVATION", loadedRes);
+                setReservation({
+                    ...loadedRes,
+                    "people": parseInt(loadedRes.people),
+                    "reservation_date": formatAsDate(loadedRes.reservation_date)
+                });
             } catch(e) {
                 setErrors(e);
             }
