@@ -40,17 +40,17 @@ export default function SingleReservation({ reservation, setError }) {
       {reservation.status === "booked" && (
         <td>
           <a href={seatLink}>
-            <button className="btn btn-secondary m-1">Seat</button>
+            <button className="btn btn-outline-info m-1">Seat</button>
           </a>
 
           <a href={editLink}>
-            <button className="btn btn-secondary m-1">Edit</button>
+            <button className="btn btn-outline-info m-1">Edit</button>
           </a>
 
           <button
             onClick={handleCancel}
             data-reservation-id-cancel={reservation.reservation_id}
-            className="btn btn-secondary m-1"
+            className="btn btn-outline-info m-1"
           >
             Cancel
           </button>

@@ -27,7 +27,7 @@ export default function SingleTable({ table, setError }) {
             {table.status === "occupied" && (
                 <td><button type="submit"
                 data-table-id-finish={table.table_id}
-                className="btn btn-primary"
+                className="btn btn-outline-info"
                 onClick={handleClick}>Finish</button></td>
             )}
         </tr>

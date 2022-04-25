@@ -65,9 +65,9 @@ export default function CreateTable() {
                     />
                 </div>
                 <button
-                className="btn btn-secondary m-1"
+                className="btn btn-outline-secondary m-1"
                 onClick={history.goBack}>Cancel</button>
-                <button type="submit" className="btn btn-primary m-1">Submit</button>
+                <button type="submit" className="btn btn-outline-info m-1">Submit</button>
             </form>
         </div>
     );

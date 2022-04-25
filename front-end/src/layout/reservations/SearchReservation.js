@@ -26,8 +26,8 @@ export default function SearchReservation() {
     }
 
     return (
-        <div>
-            <h1>Search Reservations</h1>
+        <div className="container">
+            <h1 className="m-3">Search Reservations</h1>
             <div>
             <form onSubmit={handleSubmit} className="search-form">
                 <div className="form-item">
@@ -37,10 +37,10 @@ export default function SearchReservation() {
                     className="search"
                     value={mobileNumber}
                     onChange={handleChange}
-                    placeholder="Enter a customer's phone number"
+                    placeholder="Enter mobile number"
                     required
                     />
-                    <button type="submit" className="btn btn-primary m-1">Search</button>
+                    <button type="submit" className="btn btn-outline-info m-1">Search</button>
                 </div>
             </form>
         </div>

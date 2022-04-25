@@ -5,7 +5,7 @@ export default function ReservationTable({ reservations, setError }) {
     const list = reservations.map((res) => <SingleReservation reservation={res} setError={setError} key={res.reservation_id}/>);
     return (
     <div>
-        <table className="table">
+        <table className="table table-borderless">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -15,6 +15,7 @@ export default function ReservationTable({ reservations, setError }) {
                     <th scope="col">TIME</th>
                     <th scope="col">PEOPLE</th>
                     <th scope="col">STATUS</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>

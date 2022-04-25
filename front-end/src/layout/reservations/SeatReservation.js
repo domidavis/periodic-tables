@@ -64,10 +64,11 @@ export default function SeatReservation() {
             <h3>#{res.reservation_id} - {res.first_name} {res.last_name} on {res.reservation_date} at {res.reservation_time} for {res.people}</h3>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor="table_id">Seat at:</label>
+                    <label className="form-label" id="seat-form-label" htmlFor="table_id">Seat at:</label>
                 </div>
                 <div>
                     <select
+                        id="seat-form-select"
                         name="table_id"
                         className="form-select"
                         aria-label="Default select example"
@@ -79,8 +80,8 @@ export default function SeatReservation() {
                     </select>
                 </div>
                 <div>
-                    <button type="cancel" className="btn btn-secondary m-1" onClick={() => history.push("/")}>Cancel</button>
-                    <button type="submit" className="btn btn-primary m-1">Submit</button>
+                    <button type="cancel" className="btn btn-outline-secondary m-1" onClick={() => history.push("/")}>Cancel</button>
+                    <button type="submit" className="btn btn-outline-info m-1">Submit</button>
                 </div>
             </form>
         </div>

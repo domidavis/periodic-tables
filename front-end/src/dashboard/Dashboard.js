@@ -6,6 +6,7 @@ import { previous, today, next } from "../utils/date-time";
 import { useHistory } from "react-router";
 import ReservationTable from "../layout/reservations/ReservationTable";
 import DisplayTables from "../layout/tables/DisplayTables";
+import { FontAwesome } from "react-icons/fa";
 
 /**
  * Defines the dashboard page.
@@ -68,13 +69,14 @@ function Dashboard({ date }) {
       <div>
         <ErrorAlert error={reservationsError} />
         <div>
-          <h3 className="mb-0">Reservations for {date}</h3>
-          <button className="btn btn-secondary m-2" onClick={handlePrevious}>Previous</button>
-          <button className="btn btn-secondary m-2" onClick={handleToday}>Today</button>
-          <button className="btn btn-secondary m-2" onClick={handleNext}>Next</button>
+          <div id="button-div">
+            <button className="btn btn-info m-2" onClick={handlePrevious}>&#8249;</button>
+            <button className="btn btn-info m-2" onClick={handleToday}>Today</button>
+            <button className="btn btn-info m-2" onClick={handleNext}>&#8250;</button>
+          </div>
+          <h3 className="mt-5">Reservations for {date}</h3>
             <ReservationTable reservations={reservations} setError={setReservationsError}/>
-          <div className="mt-">
-          <h2>Tables</h2>
+          <div className="mt-3">
             <ErrorAlert error={tablesError} />
             <DisplayTables tables={tables} setError={setTablesError}/>
           </div>

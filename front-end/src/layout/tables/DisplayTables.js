@@ -4,8 +4,9 @@ import SingleTable from "./SingleTable";
 export default function DisplayTables({ tables, setError }) {
     const list = tables.map((table) => <SingleTable key={table.table_id} table={table} setError={setError}/>);
     return (
-        <div>
-            <table className="table">
+        <div className="mt-5">
+            <h3>Tables</h3>
+            <table className="table table-borderless">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
