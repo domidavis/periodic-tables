@@ -64,7 +64,7 @@ function Dashboard({ date }) {
   console.log(reservations);
   console.log(tables);
   return (
-    <main>
+    <main className="m-3">
       <h1>Dashboard</h1>
       <div>
         <ErrorAlert error={reservationsError} />
