@@ -21,7 +21,7 @@ describe("US-08 - Change an existing reservation - E2E", () => {
 
   beforeAll(async () => {
     await fsPromises.mkdir("./.screenshots", { recursive: true });
-    setDefaultOptions({ timeout: 1000 });
+    setDefaultOptions({ timeout: 10000 });
     browser = await puppeteer.launch();
   });
 
@@ -34,6 +34,7 @@ describe("US-08 - Change an existing reservation - E2E", () => {
       reservation_time: "14:00",
       people: 4,
     });
+    console.log("reservation created")
     page = await browser.newPage();
     await page.setViewport({ width: 1920, height: 1080 });
     page.on("console", onPageConsole);
@@ -190,12 +191,12 @@ describe("US-08 - Change an existing reservation - E2E", () => {
         path: ".screenshots/us-08-edit-reservation-submit-before.png",
         fullPage: true,
       });
-
+      console.log("trying submit")
       await Promise.all([
         submitButton.click(),
         page.waitForNavigation({ waitUntil: "networkidle0" }),
       ]);
-
+      console.log("finished submit")
       expect(page.url()).toContain("/dashboard");
 
       await page.screenshot({
