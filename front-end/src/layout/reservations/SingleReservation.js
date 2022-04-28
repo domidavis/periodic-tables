@@ -42,10 +42,11 @@ export default function SingleReservation({ reservation, setError }) {
           <a href={seatLink}>
             <button className="btn btn-outline-info m-1">Seat</button>
           </a>
-
+        <td>
           <a href={editLink}>
             <button className="btn btn-outline-info m-1">Edit</button>
           </a>
+        </td>
 
           <button
             onClick={handleCancel}

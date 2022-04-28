@@ -53,7 +53,6 @@ export default function ReservationForm() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            console.log("trying handle submit")
             if (reservation_id) {
                 await updateReservation(reservation);
             } else {
@@ -63,7 +62,6 @@ export default function ReservationForm() {
             history.push(`/dashboard?date=${reservation.reservation_date}`);
         }
         catch(e) {
-            console.log("catching handle submit")
             setErrors(e);
         }
 

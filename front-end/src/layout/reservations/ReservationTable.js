@@ -4,7 +4,7 @@ import SingleReservation from "./SingleReservation";
 export default function ReservationTable({ reservations, setError }) {
     const list = reservations.map((res) => <SingleReservation reservation={res} setError={setError} key={res.reservation_id}/>);
     return (
-    <div>
+    <div className="table-responsive-md">
         <table className="table table-borderless">
             <thead>
                 <tr>

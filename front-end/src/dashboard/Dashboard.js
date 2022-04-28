@@ -60,8 +60,6 @@ function Dashboard({ date }) {
     history.push(`dashboard?date=${next(date)}`);
   }
 
-  console.log(reservations);
-  console.log(tables);
   return (
     <main className="m-3">
       <h1>Dashboard</h1>

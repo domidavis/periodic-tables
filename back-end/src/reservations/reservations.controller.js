@@ -60,7 +60,7 @@ function dateIsFuture(req, res, next) {
 function dateIsWorkingDay(req, res, next) {
   const { data: { reservation_date } = {} } = req.body;
   const date = new Date(reservation_date);
-    if (date.getDay() === 1) {
+    if (date.getDay() === 2) {
       return next({
         status: 400,
         message: `Restaurant is closed on Tuesdays.`
