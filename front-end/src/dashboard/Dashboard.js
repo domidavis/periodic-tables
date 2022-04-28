@@ -6,7 +6,6 @@ import { previous, today, next } from "../utils/date-time";
 import { useHistory } from "react-router";
 import ReservationTable from "../layout/reservations/ReservationTable";
 import DisplayTables from "../layout/tables/DisplayTables";
-import { FontAwesome } from "react-icons/fa";
 
 /**
  * Defines the dashboard page.
