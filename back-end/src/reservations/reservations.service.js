@@ -11,7 +11,7 @@ async function list(date) {
     else {
         return knex("reservations as r")
         .select("*")
-        .whereNot({"status": "finished"})
+     //   .whereNot({"status": "finished"})
         .orderBy("reservation_date");
     }
 }
