@@ -5,10 +5,28 @@
   height: 100vh;
 }
 
+.navbar-dark .navbar-nav .nav-link {
+  color: #161616;
+}
+
+.navbar-dark .navbar-nav .active>.nav-link, 
+.navbar-dark .navbar-nav .nav-link.active, 
+.navbar-dark .navbar-nav .nav-link.show, 
+.navbar-dark .navbar-nav .show>.nav-link, 
+.navbar-dark .navbar-nav .nav-link.hover,
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:focus {
+  color: #fff;
+
+}
+
 .table {
   color: rgb(199, 199, 199);
 }
 
+.domi-the-boss-bar {
+  background-color: #17a2b8;
+}
 
 thead {
   color: #0dcaf0
