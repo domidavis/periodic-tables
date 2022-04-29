@@ -27,7 +27,7 @@ export default function SearchReservation() {
 
     return (
         <div className="container">
-            <h1 className="m-3">Search Reservations</h1>
+            <h1 className="m-3 mt-5 pt-5">Search Reservations</h1>
             <div>
             <form onSubmit={handleSubmit} className="search-form">
                 <div className="form-item">

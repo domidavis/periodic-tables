@@ -59,7 +59,7 @@ export default function SeatReservation() {
     ));
     return (
         <div>
-            <h1>Seat Reservation</h1>
+            <h1 className="mt-5 pt-5 mb-4">Seat Reservation</h1>
             <ErrorAlert error={error}/>
             <h3>#{res.reservation_id} - {res.first_name} {res.last_name} on {res.reservation_date} at {res.reservation_time} for {res.people}</h3>
             <form onSubmit={handleSubmit}>
@@ -80,8 +80,11 @@ export default function SeatReservation() {
                     </select>
                 </div>
                 <div>
-                    <button type="cancel" className="btn btn-outline-secondary m-1" onClick={() => history.push("/")}>Cancel</button>
-                    <button type="submit" className="btn btn-outline-info m-1">Submit</button>
+                    <button 
+                        type="cancel" 
+                        className="btn btn-outline-secondary m-1 mt-2" 
+                        onClick={() => history.goBack()}>Cancel</button>
+                    <button type="submit" className="btn btn-outline-info m-1 mt-2">Submit</button>
                 </div>
             </form>
         </div>

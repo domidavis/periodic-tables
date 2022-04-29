@@ -19,6 +19,10 @@
   color: #fff;
 
 }
+.card {
+  background-color: #222222;
+  
+}
 
 .table {
   color: rgb(199, 199, 199);
@@ -26,6 +30,16 @@
 
 .domi-the-boss-bar {
   background-color: #17a2b8;
+  
+}
+/* .table .table-hover {
+  color: white;
+  background-color: #17a2b8;
+} */
+.domi-ba-color {
+  color: #0dcaf0;
+  font-size: 18px;
+  /* opacity: 2.4; */
 }
 
 thead {

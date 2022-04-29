@@ -2,31 +2,18 @@ import React from "react";
 import SingleReservation from "./SingleReservation";
 
 export default function ReservationTable({ reservations, setError }) {
-    const list = reservations.map((res) => <SingleReservation reservation={res} setError={setError} key={res.reservation_id}/>);
+    const list = reservations.map((res) => <div className="col"><SingleReservation reservation={res} setError={setError} key={res.reservation_id}/> </div>);
+    
     return (
-    <div className="table-responsive-md">
-        <table className="table table-borderless">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">NAME</th>
-                    <th scope="col">PHONE</th>
-                    <th scope="col">DATE</th>
-                    <th scope="col">TIME</th>
-                    <th scope="col">PEOPLE</th>
-                    <th scope="col">STATUS</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                {list}
-            </tbody>
-        </table>
+    <div className="container-responsive-md">
+        <div className="row mt-4">
+            {list}
+        </div>
         {list < 1 && (
-                <div>
-                    No reservations found.
-                </div>
-            )}
+            <div className="alert domi-ba-color text-lg" role="alert">
+                No reservations found.
+            </div>
+        )}
     </div>
     );
 }

@@ -38,7 +38,7 @@ export default function CreateTable() {
     };
 
     return (
-        <div className="container-fluid mt-2">
+        <div className="container-fluid mt-2 mt-5 pt-5">
             <ErrorAlert error={errors} />
             <h1>Create Table</h1>
             <form onSubmit={handleSubmit}>
