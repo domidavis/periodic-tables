@@ -2,7 +2,6 @@
 
 
 ## Installation instructions
-server is setup to run on PORT 5000
 
 1. Fork / clone / download this repository.
 
