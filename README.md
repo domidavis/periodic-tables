@@ -1,4 +1,4 @@
-[View deployed app here.] (https://domi-tables-frontend.herokuapp.com/dashboard)
+###### View deployed app [here.](https://domi-tables-frontend.herokuapp.com/dashboard)
 
 
 ## Installation instructions
